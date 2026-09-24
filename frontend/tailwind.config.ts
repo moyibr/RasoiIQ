@@ -17,8 +17,8 @@ const config: Config = {
           raised: '#232B38',
         },
         accent: {
-          primary: '#E8A33D',
-          secondary: '#4FB5C7',
+          primary: '#E8A33D', // Warm orange
+          secondary: '#5FAE6E', // Green
         },
         status: {
           success: '#5FAE6E',

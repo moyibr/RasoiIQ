@@ -1,7 +1,7 @@
 # Anumaan — XGBoost Demand Forecasting Model
 
 **Anumaan** ("estimate / prognosis" in Hindi) is the AI demand prediction
-engine for the Anna Setu platform. It forecasts daily customer count for
+engine for the RasoiIQ platform. It forecasts daily customer count for
 a given kitchen location so managers can plan production accurately and
 reduce food waste.
 

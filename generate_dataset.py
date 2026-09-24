@@ -1,7 +1,7 @@
 """
 Synthetic Institutional Kitchen Demand Dataset Generator
 ==========================================================
-Built for: SIH26234 - Anna Setu (AI Food Waste Reduction & Redistribution)
+Built for: SIH26234 - RasoiIQ (AI Food Waste Reduction & Redistribution)
 
 This generator does NOT copy any real dataset's rows. It builds a synthetic
 institutional-kitchen dataset whose BEHAVIOR is grounded in patterns and
