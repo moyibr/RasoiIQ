@@ -1,224 +1,70 @@
-# 🌱 Anna Setu — SIH 2026 Prototype
+# RasoiIQ — Predict. Rescue. Redistribute.
 
-**Problem Statement:** SIH26234 — AI-powered food waste reduction and redistribution platform for institutional kitchens and food processing units.
+**Problem Statement:** SIH26234 — AI-powered food waste reduction and surplus redistribution platform for institutional kitchens and food processing units.
 
-**Core flow:** Kitchen data → Demand forecast → Production plan → Surplus detection → Rescue-window urgency → NGO matching → Route to NGO → Unified dashboard
+## Solution Overview
+RasoiIQ is a comprehensive end-to-end platform designed to minimize institutional food waste. By integrating predictive demand modeling (Anumaan), computer vision for food quality checks, real-time IoT processing unit monitoring, and an automated NGO matching and routing engine, RasoiIQ ensures that surplus food is quickly verified, securely rescued, and efficiently redistributed to those in need. 
 
----
+## Key Features
+- **Food Quality Check (Computer Vision):** Uses OpenCV to rapidly assess food freshness via color variance and dark-spot detection, automatically escalating urgency for near-spoilage items.
+- **ESG & Sustainability Analytics:** Real-time dashboards calculating kilograms of food saved, equivalent meals donated, CO2e emissions avoided, and financial savings. Includes one-click PDF reporting.
+- **Processing Unit Monitor (Simulated IoT):** An active ingestion API (`/iot/ingest`) tracks live telemetry (temperature, humidity, downtime, energy) and triggers rule-based alerts to prevent spoilage at the source.
+- **Anumaan AI Forecasts:** XGBoost-powered demand forecasting using historical consumption, climatology, and local events to optimize initial production and prevent overcooking.
+- **Intelligent NGO Matching & Routing:** Automatically ranks nearby verified NGOs based on real-time distance and capacity, generating optimized delivery waypoints.
 
-## Project Structure
-
-```
-food-waste-platform/
-├── backend/          # Python · FastAPI · SQLAlchemy · PostgreSQL (Supabase)
-├── frontend/         # Next.js 14 · TypeScript · Tailwind CSS · Recharts · MapLibre GL
-└── README.md
-```
-
----
-
-## Prerequisites
-
-| Tool | Version |
-|---|---|
-| Python | 3.11+ |
-| Node.js | 18+ |
-| npm / yarn | latest |
-| PostgreSQL | via Supabase (cloud) |
-
----
-
-## 1. Backend Setup
-
-### 1.1 Install dependencies
-
-```bash
-cd backend
-python -m venv venv
-
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-
-pip install -r requirements.txt
+## Architecture Diagram
+```mermaid
+graph TD
+    UI[Frontend: Next.js + Tailwind + Recharts] --> API[Backend: FastAPI]
+    API --> DB[(SQLite / PostgreSQL)]
+    
+    API --> Forecast[Anumaan: XGBoost Demand Forecast]
+    API --> CV[OpenCV: Quality & Freshness]
+    API --> IoT[IoT Ingestion: Sensor Telemetry]
+    API --> Match[NGO Matching & Scoring]
+    API --> ESG[ESG Impact Aggregator]
 ```
 
-### 1.2 Configure environment
+## Tech Stack
+- **Backend:** Python, FastAPI, SQLAlchemy, Pydantic
+- **AI/ML & CV:** XGBoost, Scikit-Learn, OpenCV, Pandas, NumPy
+- **Frontend:** Next.js 14, React, Tailwind CSS, Recharts, MapLibre GL
+- **Database:** SQLite (Default for demo) / PostgreSQL
 
-```bash
-cp .env.example .env
-```
+## Windows Setup Steps
 
-Edit `.env` and configure the following variables (all optional):
+1. **Backend Setup**
+   ```powershell
+   cd backend
+   python -m venv venv
+   .\venv\Scripts\activate
+   pip install -r requirements.txt
+   
+   # Generate synthetic data & initialize DB
+   python -m scripts.seed_data
+   
+   # Start the API server
+   uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
+   ```
 
-* `DATABASE_URL`: Set to a PostgreSQL connection string if you want to use PostgreSQL. Defaults to `sqlite:///./test.db` if unset.
-* `GROQ_API_KEY`: Set this to a valid Groq API key (free at console.groq.com) to enable the hosted LLM fallback tier for sustainability reports. If Ollama is down, it will use Groq. If both are down, it falls back to a template.
+2. **Frontend Setup**
+   Open a new terminal window:
+   ```powershell
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   Navigate to `http://localhost:3000` in your browser.
 
-```
-DATABASE_URL=postgresql://postgres:<your-password>@<your-project>.supabase.co:5432/postgres
-GROQ_API_KEY=your_groq_api_key_here
-```
+## Demo Credentials
+*Note: The platform is currently configured in a demonstration mode without strict multi-role authentication enabled. You will automatically land on the SysAdmin dashboard.*
 
-> **Where to find this:** Supabase Dashboard → Project Settings → Database → Connection string → URI mode. Use the "Direct connection" URI (port 5432), not the pooler.
-
-### 1.3 Seed the database
-
-This creates all tables and inserts 6 months of synthetic data:
-
-```bash
-cd backend
-python -m scripts.seed_data
-```
-
-Expected output:
-```
-✓ Tables created
-✓ Seeded: 1 kitchen, 8 food categories, 5 NGOs
-✓ Generated: ~4,400 consumption records (6 months × 8 categories × 3 meals)
-✓ Generated: ~4,400 production records
-✓ Generated: ~1,200 surplus events
-✓ Generated: ~183 sustainability metric rows
-Seeding complete.
-```
-
-The script is **idempotent** — safe to re-run without duplicating data.
-
-### 1.4 Run the backend
-
-```bash
-cd backend
-uvicorn app.main:app --reload --port 8000
-```
-
-API docs available at: [http://localhost:8000/docs](http://localhost:8000/docs)
-
-Health check: [http://localhost:8000/health](http://localhost:8000/health)
-
----
-
-## 2. Frontend Setup
-
-### 2.1 Install dependencies
-
-```bash
-cd frontend
-npm install
-```
-
-### 2.2 Run the frontend
-
-```bash
-npm run dev
-```
-
-App available at: [http://localhost:3000](http://localhost:3000)
-
-> Make sure the backend is running on port 8000 before opening the frontend, or you'll see API errors.
-
----
-
-## 3. Regenerating Synthetic Data
-
-To wipe and re-seed all synthetic data from scratch:
-
-```bash
-# From the backend/ directory with venv active
-python -m scripts.seed_data
-```
-
-The script deletes existing rows before re-inserting, so the data is always fresh and consistent.
-
-To export data as CSV instead of seeding into the DB, run:
-```bash
-python -m scripts.seed_data --export-csv
-```
-This writes CSV files to `backend/data/` (one per table).
-
----
-
-## 4. API Endpoints
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `GET /health` | GET | Health check |
-| `GET /anumaan/forecast` | GET | Automated demand forecast using Anumaan |
-| `GET /surplus` | GET | Active surplus events with urgency |
-| `POST /match` | POST | Ranked NGO list for a surplus event |
-| `GET /route` | GET | Delivery route waypoints |
-| `GET /dashboard/summary` | GET | Aggregated stats for dashboard |
-
-Full interactive docs: [http://localhost:8000/docs](http://localhost:8000/docs)
-
----
-
-## 5. What's Real vs. Stubbed
-
-This is a prototype. We are currently integrating Phase 2 (Anumaan XGBoost Model).
-
-| Module | Status | Notes |
-|---|---|---|
-| **Database schema** | ✅ Real | All 8 tables created and normalized, including `consumption_history` |
-| **Synthetic data generator** | ✅ Real | Data generation logic is live |
-| **NGO seed profiles** | ✅ Real | 5 NGOs with real Bengaluru coordinates |
-| **Dashboard UI** | ✅ Real | Wired to live API |
-| **Surplus list UI** | ✅ Real | Wired to live API |
-| **NGO match list UI** | ✅ Real | Wired to live API |
-| **Map with NGO markers** | ✅ Real | Real MapLibre GL JS with OSM tiles |
-| **Route polyline on map** | ✅ Real | Renders stub route data correctly |
-| **Forecast chart** | ✅ Real | Recharts chart, renders Anumaan predictions |
-| **`/anumaan/forecast` logic** | ✅ Real | Uses trained XGBoost model with auto-assembled lag and contextual features. |
-| **`/surplus` logic** | 🟡 Stub | Returns hardcoded surplus events; Phase 2 will query live DB with rule-based detection |
-| **`/match` logic** | 🟡 Stub | Returns hardcoded ranked NGOs; Phase 2 will use scoring engine (distance + capacity + preference) |
-| **`/route` logic** | 🟡 Stub | Returns interpolated straight-line route; Phase 2 will use nearest-neighbor ordering |
-| **`/dashboard/summary` logic** | 🟡 Stub | Returns hardcoded stats; Phase 2 will aggregate from DB |
-
-### Phase 2a - Anumaan Integration Notes
-
-**Kitchen-To-Location Mapping**
-Since the Anumaan model was trained on specific Location IDs (Loc_1 to Loc_26), the demo kitchens are strictly mapped as follows:
-- `K1_MainCampus` -> `Loc_3`
-- `K2_HostelBlockA` -> `Loc_7`
-- `K3_HostelBlockB` -> `Loc_15`
-
-**Climatology Fallback for Contextual Features**
-In a real deployment, advance contextual features like temperature, reservations, and online ratings are not perfectly known. We use a **climatology fallback** pattern for cold-start forecasting:
-- `temp_celsius` and `rain_mm` use the historical seasonal average for that location/month.
-- `reservations`, `cpi_index`, `online_rating`, and `competitor_promo` use the recent 30-day historical average.
-
-**Historical Data Gap & Synthetic Bridge**
-The raw `restaurant_demand_28k.csv` dataset ends in December 2025. Because demos will run in September 2026 (or later), there is a temporal gap. To ensure the automated lag features (`demand_yesterday`, `demand_7_days_ago`, `demand_ma7`) still work, we generate a **synthetic continuous bridge**. The `seed_anumaan.py` script automatically shifts 2025 data forward by 364 days to populate 2026 dates, ensuring seamless lag feature continuity right up to the demo date. Note that this bridge simply copies the exact, raw (noisy) historical values from 52 weeks prior rather than smoothing them or regenerating them via a fresh negative-binomial process.
-
-### Not built (out of scope for now — P2)
-- VRPTW routing solver (OR-Tools)
-- Computer vision freshness detection
-- Multi-role authentication
-- SMS / push notifications
-- LLM-generated sustainability reports (P1, not yet)
-
----
-
-## 6. Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Backend API | FastAPI 0.111 |
-| ORM | SQLAlchemy 2.0 |
-| Database | PostgreSQL via Supabase |
-| Data validation | Pydantic v2 |
-| Frontend framework | Next.js 14 (App Router) |
-| Styling | Tailwind CSS 3 |
-| Charts | Recharts 2 |
-| Map | MapLibre GL JS 4 |
-| Map tiles | OpenStreetMap (no API key required) |
-
----
-*Built for Smart India Hackathon 2026 · Problem Statement SIH26234*
+## Screenshots
+*(Insert screenshots of the Dashboard, Quality Check, ESG Report, and IoT Monitor here)*
 
 ---
 
 ## Acknowledgements
-
 RasoiIQ is built on top of the open-source project 'AI-Powered-Food-Reduction-and-Surplus-Distribution-Management' by Garv1105 (https://github.com/Garv1105/AI-Powered-Food-Reduction-and-Surplus-Distribution-Management), used under its license. Original LICENSE retained.
 
 **Additions made in RasoiIQ:**
