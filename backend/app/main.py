@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 from app.routers import surplus, match, route, dashboard, anumaan, production
-from app.routers import processing_unit, reports, quality
+from app.routers import processing_unit, reports, quality, iot
 
 load_dotenv()
 
@@ -29,9 +29,11 @@ app.include_router(production.router, tags=["Production"])
 app.include_router(processing_unit.router, tags=["Processing Unit"])
 app.include_router(reports.router, tags=["Reports"])
 app.include_router(quality.router)
+app.include_router(iot.router)
 
 @app.on_event("startup")
 def on_startup():
+    from app.models.iot import IoTSensorData  # Ensure model is registered
     Base.metadata.create_all(bind=engine)
     from app.services.matching_context import seed_ngos
     from scripts.seed_processing_unit import seed_processing_unit

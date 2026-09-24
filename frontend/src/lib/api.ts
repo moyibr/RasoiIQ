@@ -407,5 +407,8 @@ export const api = {
   },
 
   getEsgAnalytics: (): Promise<any> => fetchWithCheck(`${BASE_URL}/reports/esg-analytics`),
+
+  getIotData: (unitId: number = 1): Promise<any> => fetchWithCheck(`${BASE_URL}/iot/data?unit_id=${unitId}`),
+  simulateIotData: (unitId: number = 1): Promise<any> => fetchWithCheck(`${BASE_URL}/iot/simulate?unit_id=${unitId}`, { method: 'POST' }),
 };
 
