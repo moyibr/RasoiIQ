@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { LayoutDashboard, AlertTriangle, Map as MapIcon, BarChart2, BrainCircuit, Factory } from 'lucide-react';
+import { LayoutDashboard, AlertTriangle, Map as MapIcon, BarChart2, BrainCircuit, Factory, Camera, Leaf, Cpu } from 'lucide-react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { api } from '@/lib/api';
@@ -46,9 +46,12 @@ export default function Sidebar() {
   const links = [
     { href: '/dashboard', label: 'Dashboard',         icon: LayoutDashboard },
     { href: '/anumaan',   label: 'Anumaan AI',            icon: BrainCircuit    },
+    { href: '/quality',   label: 'Quality Check',         icon: Camera          },
     { href: '/surplus',   label: 'Surplus Events', icon: AlertTriangle, hasAlerts: activeAlerts > 0 },
     { href: '/map',             label: 'Live Dispatch',      icon: MapIcon         },
     { href: '/processing-unit', label: 'Processing Unit',     icon: Factory         },
+    { href: '/iot-monitor', label: 'IoT Monitor',         icon: Cpu             },
+    { href: '/esg-report',  label: 'ESG Report',          icon: Leaf            },
     { href: '/reports',         label: 'Telemetry',             icon: BarChart2       },
   ];
 

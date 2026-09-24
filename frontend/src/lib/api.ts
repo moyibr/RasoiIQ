@@ -391,5 +391,19 @@ export const api = {
 
   getSustainabilityReport: (dateRange: string): Promise<SustainabilityReport> =>
     fetchWithCheck(`${BASE_URL}/reports/sustainability?date_range=${encodeURIComponent(dateRange)}`),
+
+  analyzeQuality: async (imageFile: File, surplusEventId?: number): Promise<any> => {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    if (surplusEventId) {
+      formData.append('surplus_event_id', surplusEventId.toString());
+    }
+    const response = await fetch(`${PRIMARY_URL}/quality/analyze`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    return response.json();
+  }
 };
 

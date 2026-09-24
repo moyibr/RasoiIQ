@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 from app.routers import surplus, match, route, dashboard, anumaan, production
-from app.routers import processing_unit, reports
+from app.routers import processing_unit, reports, quality
 
 load_dotenv()
 
@@ -28,6 +28,7 @@ app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
 app.include_router(production.router, tags=["Production"])
 app.include_router(processing_unit.router, tags=["Processing Unit"])
 app.include_router(reports.router, tags=["Reports"])
+app.include_router(quality.router)
 
 @app.on_event("startup")
 def on_startup():
