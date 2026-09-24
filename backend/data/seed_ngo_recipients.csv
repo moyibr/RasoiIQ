@@ -1,0 +1,5 @@
+name,contact_name,contact_phone,lat,lng,food_preference,capacity_kg,address,accepted_categories,operating_hours_start,operating_hours_end
+Hope Foundation,Ravi Kumar,9876543210,12.9716,77.5946,VEG,50.0,MG Road Bangalore,ALL,08:00,20:00
+Smile NGO,Priya Sharma,9876543211,12.9352,77.6245,VEG,20.0,Koramangala Bangalore,"Rice,Dal,Roti_Bread",09:00,21:00
+Care Trust,Amit Singh,9876543212,12.9915,77.5925,ALL,100.0,Vasanth Nagar Bangalore,ALL,00:00,23:59
+Feeding India Blr,Neha Gupta,9876543213,12.9250,77.5938,ALL,30.0,Jayanagar Bangalore,"Vegetable_Curry,Dessert",07:00,18:00

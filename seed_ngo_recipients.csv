@@ -1,0 +1,6 @@
+ngo_id,name,lat,lon,food_type_accepted,capacity_kg_per_day,operating_hours
+NGO1,Akshaya Seva Trust,12.9716,77.5946,veg_only,80,08:00-20:00
+NGO2,Bengaluru Food Bank,12.9352,77.6146,veg_nonveg,150,09:00-18:00
+NGO3,Shanti Community Kitchen,12.9784,77.6408,veg_only,60,07:00-19:00
+NGO4,Hope Shelter Homes,12.9081,77.6476,veg_nonveg,100,24hrs
+NGO5,Uday Foundation Bengaluru,13.0206,77.576,veg_only,70,08:00-21:00
