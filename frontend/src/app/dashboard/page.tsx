@@ -47,10 +47,21 @@ export default function DashboardPage() {
     }
   };
 
-  if (loading || !summary || !forecast) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-accent-secondary"></div>
+      </div>
+    );
+  }
+
+  if (error || !summary || !forecast) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-8">
+        <div className="bg-status-critical/10 text-status-critical border border-status-critical/30 p-6 rounded-xl max-w-md w-full text-center">
+          <h2 className="text-xl font-bold mb-2">Dashboard Error</h2>
+          <p>{error || 'Failed to load essential data.'}</p>
+        </div>
       </div>
     );
   }

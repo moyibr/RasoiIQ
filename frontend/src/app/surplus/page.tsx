@@ -84,9 +84,9 @@ export default function SurplusPage() {
         </div>
       )}
 
-      <div className="flex-1 min-h-0 flex gap-6">
+      <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6">
         {/* Left Column: Surplus Events */}
-        <div className="w-1/2 flex flex-col h-full bg-ink-surface rounded-sm border border-ink-raised">
+        <div className="w-full lg:w-1/2 flex flex-col h-[50vh] lg:h-full bg-ink-surface rounded-sm border border-ink-raised">
           <div className="p-4 border-b border-ink-raised">
             <h2 className="font-display font-bold text-content-primary tracking-wide uppercase flex items-center gap-2">
               Active Surplus
@@ -213,7 +213,7 @@ export default function SurplusPage() {
         </div>
 
         {/* Right Column: NGO Matches */}
-        <div className="w-1/2 flex flex-col h-full bg-ink-base rounded-sm border border-ink-raised">
+        <div className="w-full lg:w-1/2 flex flex-col h-[50vh] lg:h-full bg-ink-base rounded-sm border border-ink-raised">
           {!selectedEvent ? (
             <div className="flex-1 flex items-center justify-center">
               <p className="text-content-secondary font-mono text-sm tracking-widest uppercase">Select an event to match</p>

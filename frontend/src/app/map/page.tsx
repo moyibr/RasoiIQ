@@ -99,7 +99,7 @@ export default function MapPage() {
         
         {route ? (
           <div className="flex flex-col gap-4">
-            <div className="flex gap-6">
+            <div className="flex flex-wrap gap-6">
               <div className="flex items-center gap-3 bg-ink-surface px-4 py-3 rounded-sm border border-ink-raised">
                 <Navigation2 className="text-accent-secondary" size={24} />
                 <div>
