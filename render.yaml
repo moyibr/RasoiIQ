@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: rasoiiq-backend
+    env: python
+    buildCommand: "cd backend && pip install -r requirements.txt && python -m scripts.seed_data"
+    startCommand: "cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        value: sqlite:///./data/test.db
+      - key: GROQ_API_KEY
+        sync: false

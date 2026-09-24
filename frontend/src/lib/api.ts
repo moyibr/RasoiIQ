@@ -226,8 +226,8 @@ export interface SustainabilityReport {
   llm_error: string | null;
 }
 
-const PRIMARY_URL = 'http://127.0.0.1:8080';
-const FALLBACK_URL = 'http://127.0.0.1:8081';
+const PRIMARY_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8080';
+const FALLBACK_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8081';
 const BASE_URL = ''; // Callers prepend this, making the arg an endpoint path like '/route'
 
 async function fetchWithCheck(endpoint: string, options?: RequestInit) {
