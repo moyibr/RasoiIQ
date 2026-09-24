@@ -65,10 +65,4 @@ graph TD
 ---
 
 ## Acknowledgements
-RasoiIQ is built on top of the open-source project 'AI-Powered-Food-Reduction-and-Surplus-Distribution-Management' by Garv1105 (https://github.com/Garv1105/AI-Powered-Food-Reduction-and-Surplus-Distribution-Management), used under its license. Original LICENSE retained.
-
-**Additions made in RasoiIQ:**
-- **Food Quality Check (computer vision):** Added a `/quality/analyze` endpoint using OpenCV to assess food freshness via color variance, and a React frontend for image upload and score visualization.
-- **ESG and Sustainability Analytics:** Added a `/reports/esg-analytics` backend endpoint to compute saved food, donated meals, and CO2e avoided, alongside a frontend dashboard with Recharts visualizations and a PDF download feature.
-- **Processing Unit Monitor (simulated IoT):** Added the `IoTSensorData` database model, ingestion/simulation endpoints (`/iot/ingest`, `/iot/simulate`), rule-based alerting for temperature and downtime, and a live telemetry dashboard in the frontend.
-- **Dependency Stabilization:** Removed strict pins in `requirements.txt` to allow building on modern Python (3.13) without native C++ compilation errors on Windows.
+Built on the open-source project by Garv1105 (https://github.com/Garv1105/AI-Powered-Food-Reduction-and-Surplus-Distribution-Management). Original LICENSE retained.
