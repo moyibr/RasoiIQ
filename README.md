@@ -65,4 +65,4 @@ graph TD
 ---
 
 ## Acknowledgements
-Built on the open-source project by Garv1105 (https://github.com/Garv1105/AI-Powered-Food-Reduction-and-Surplus-Distribution-Management). Original LICENSE retained.
+get helped by open-source project (https://github.com/Garv1105/AI-Powered-Food-Reduction-and-Surplus-Distribution-Management). Original LICENSE retained.
