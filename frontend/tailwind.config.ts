@@ -12,22 +12,22 @@ const config: Config = {
       },
       colors: {
         ink: {
-          base: '#14181F',
-          surface: '#1B212B',
-          raised: '#232B38',
+          base: '#020617',
+          surface: '#0F172A',
+          raised: '#1E293B',
         },
         accent: {
-          primary: '#E8A33D', // Warm orange
-          secondary: '#5FAE6E', // Green
+          primary: '#10B981', // Vibrant Emerald
+          secondary: '#F59E0B', // Bright Amber
         },
         status: {
-          success: '#5FAE6E',
-          warning: '#E8A33D',
-          critical: '#D9564A',
+          success: '#10B981',
+          warning: '#F59E0B',
+          critical: '#EF4444',
         },
         content: {
-          primary: '#F2F0EA',
-          secondary: '#9AA3B2',
+          primary: '#F8FAFC',
+          secondary: '#94A3B8',
         }
       }
     },

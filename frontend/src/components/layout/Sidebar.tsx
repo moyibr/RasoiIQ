@@ -61,7 +61,7 @@ export default function Sidebar() {
       <div className="p-8 pb-4">
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center">
-            <Leaf className="text-status-success drop-shadow-[0_0_10px_rgba(95,174,110,0.6)]" size={28} />
+            <Leaf className="text-status-success drop-shadow-[0_0_10px_rgba(16,185,129,0.6)]" size={28} />
           </div>
           <div>
             <h1 className="text-2xl font-display font-bold text-white tracking-tight glow-text-primary">RasoiIQ</h1>
